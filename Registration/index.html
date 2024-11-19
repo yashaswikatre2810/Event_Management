@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Registration</title>
+</head>
+<body>
+    <h1>Register Team</h1>
+    <form id="registrationForm">
+        <label for="team_name">Team Name:</label>
+        <input type="text" id="team_name" name="team_name" required>
+        <label for="members">Members (comma-separated):</label>
+        <input type="text" id="members" name="members" required>
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const team_name = document.getElementById('team_name').value;
+            const members = document.getElementById('members').value.split(',');
+
+            const response = await fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ team_name, members }),
+            });
+
+            if (response.ok) {
+                alert('Team registered successfully!');
+            } else {
+                alert('Failed to register team.');
+            }
+        });
+    </script>
+</body>
+</html>
